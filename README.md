@@ -1,19 +1,28 @@
 # TellerSandbox
 
-To start your Phoenix server:
+This is an API sandbox used for testing the Teller API.
 
-  * Install dependencies with `mix deps.get`
-  * Install Node.js dependencies with `npm install` inside the `assets` directory
-  * Start Phoenix endpoint with `mix phx.server`
+## Starting the API
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+```sh
+mix deps get
+iex -S mix phx.server
+```
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+You should now be able to send requests to the API. There is also a liveview dashboard available under `/dashboard`
 
-## Learn more
+### Making a request
 
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+It requires basic authorization in the form of a username and a blank password. The username should be a url safe string, prepended with `test_`.
+
+Now when calling the API be sure to provide the auth as a header like so:
+
+```sh
+curl --user test_my_awesome_token: http://localhost:4000
+```
+
+### Tests
+
+```sh
+mix test
+```
