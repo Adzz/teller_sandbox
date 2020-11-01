@@ -1,11 +1,17 @@
-defmodule Teller.AccountTest do
+defmodule Teller.Contexts.AccountTest do
   use ExUnit.Case, async: true
+  alias Teller.Contexts.Account
 
   describe "from_token" do
     test "Returns an account for a given token" do
+      ten_thousand = Decimal.new(10000)
+
       assert %Teller.Account{
                account_number: 1_234_567_865,
-               balances: %Teller.Balances{available: 10, ledger: 10},
+               balances: %Teller.Balances{
+                 available: ^ten_thousand,
+                 ledger: ^ten_thousand
+               },
                currency_code: "USD",
                enrollment_id: "test_MTIzNDU2Nzg2NQ==",
                id: "test_acc_GEZDGNBVGY3TQNRV",
@@ -16,23 +22,27 @@ defmodule Teller.AccountTest do
                },
                name: "Donald Trump",
                routing_numbers: %Teller.RoutingNumbers{ach: 55_443_128, wire: 1_491_488_761}
-             } = Teller.Account.from_token("1234567865")
+             } = Account.from_token("1234567865")
     end
 
     test "the same token twice returns the same account" do
       token = "1234567865"
-      account_1 = Teller.Account.from_token(token)
-      account_2 = Teller.Account.from_token(token)
+      account_1 = Account.from_token(token)
+      account_2 = Account.from_token(token)
 
       assert account_1 == account_2
     end
 
     test "if the token is multiple we produce mutltiple accounts" do
-      [account_1, account_2] = Teller.Account.from_token("multiple_112")
+      [account_1, account_2] = Account.from_token("multiple_112")
+      ten_thousand = Decimal.new(10000)
 
       assert %Teller.Account{
                account_number: 1_915_688_566,
-               balances: %Teller.Balances{available: 10, ledger: 10},
+               balances: %Teller.Balances{
+                 available: ^ten_thousand,
+                 ledger: ^ten_thousand
+               },
                currency_code: "USD",
                enrollment_id: "test_MTkxNTY4ODU2Ng==",
                id: "test_acc_GE4TCNJWHA4DKNRW",
@@ -47,7 +57,10 @@ defmodule Teller.AccountTest do
 
       assert %Teller.Account{
                account_number: 112,
-               balances: %Teller.Balances{available: 10, ledger: 10},
+               balances: %Teller.Balances{
+                 available: ^ten_thousand,
+                 ledger: ^ten_thousand
+               },
                currency_code: "USD",
                enrollment_id: "test_MTEy",
                id: "test_acc_GEYTE===",
@@ -62,8 +75,8 @@ defmodule Teller.AccountTest do
     end
 
     test "repeating a multiple token returns the same results" do
-      [account_1, account_2] = Teller.Account.from_token("multiple_112")
-      [account_a, account_b] = Teller.Account.from_token("multiple_112")
+      [account_1, account_2] = Account.from_token("multiple_112")
+      [account_a, account_b] = Account.from_token("multiple_112")
 
       assert account_1 == account_a
       assert account_2 == account_b
@@ -72,7 +85,7 @@ defmodule Teller.AccountTest do
     test "we don't repeat institutions" do
       # We could / should use property based testing here to ensure we never repeat an Institution.
       # Essentially generate the accounts and check that there are no repeats.
-      assert [one, two, three, four, five] = accounts = Teller.Account.from_token("multiple_1")
+      assert [one, two, three, four, five] = accounts = Account.from_token("multiple_1")
       institutions = Enum.map(accounts, & &1.institution.id)
 
       assert one.institution.id not in (institutions -- [one.institution.id])

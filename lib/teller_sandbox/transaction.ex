@@ -4,11 +4,11 @@ defmodule Teller.Transaction do
   embedded_schema do
     field(:account_id, :string)
     field(:amount, :decimal)
-    field(:date, :decimal)
+    field(:date, :date)
     field(:description, :string)
-    field(:status, :string)
     field(:id, :string)
-    embeds_one(:link, Teller.TransactionLink)
+    embeds_one(:links, Teller.TransactionLink)
+    # I'm assuming this is the balance BEFORE the transaction is applied.
     field(:running_balance, :decimal)
     field(:type, :string)
   end

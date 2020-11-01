@@ -11,7 +11,7 @@ defmodule TellerSandboxWeb.AccountControllerTest do
 
       assert response == %{
                "account_number" => 1_234_567_891,
-               "balances" => %{"available" => 10, "ledger" => 10},
+               "balances" => %{"available" => "10000", "ledger" => "10000"},
                "currency_code" => "USD",
                "enrollment_id" => "test_MTIzNDU2Nzg5MQ==",
                "id" => "test_acc_GEZDGNBVGY3TQOJR",
@@ -39,7 +39,7 @@ defmodule TellerSandboxWeb.AccountControllerTest do
       assert response == [
                %{
                  "account_number" => 772_284_235,
-                 "balances" => %{"available" => 10, "ledger" => 10},
+                 "balances" => %{"available" => "10000", "ledger" => "10000"},
                  "currency_code" => "USD",
                  "enrollment_id" => "test_NzcyMjg0MjM1",
                  "id" => "test_acc_G43TEMRYGQZDGNI=",
@@ -54,7 +54,7 @@ defmodule TellerSandboxWeb.AccountControllerTest do
                },
                %{
                  "account_number" => 3_444_322_977,
-                 "balances" => %{"available" => 10, "ledger" => 10},
+                 "balances" => %{"available" => "10000", "ledger" => "10000"},
                  "currency_code" => "USD",
                  "enrollment_id" => "test_MzQ0NDMyMjk3Nw==",
                  "id" => "test_acc_GM2DINBTGIZDSNZX",
@@ -69,7 +69,7 @@ defmodule TellerSandboxWeb.AccountControllerTest do
                },
                %{
                  "account_number" => 2_863_746_943,
-                 "balances" => %{"available" => 10, "ledger" => 10},
+                 "balances" => %{"available" => "10000", "ledger" => "10000"},
                  "currency_code" => "USD",
                  "enrollment_id" => "test_Mjg2Mzc0Njk0Mw==",
                  "id" => "test_acc_GI4DMMZXGQ3DSNBT",
@@ -84,7 +84,7 @@ defmodule TellerSandboxWeb.AccountControllerTest do
                },
                %{
                  "account_number" => 1_234_567_891,
-                 "balances" => %{"available" => 10, "ledger" => 10},
+                 "balances" => %{"available" => "10000", "ledger" => "10000"},
                  "currency_code" => "USD",
                  "enrollment_id" => "test_MTIzNDU2Nzg5MQ==",
                  "id" => "test_acc_GEZDGNBVGY3TQOJR",
@@ -112,6 +112,16 @@ defmodule TellerSandboxWeb.AccountControllerTest do
       assert response.resp_body == "Not Found"
     end
 
+    test "we 404 on incorrect params", %{conn: conn} do
+      response =
+        build_conn()
+        |> put_req_header("authorization", "Basic #{Base.url_encode64("test_multiple_2:")}")
+        |> get(Routes.account_path(conn, :get, "not an id"), %{"bananas" => "not an id"})
+
+      assert response.status == 404
+      assert response.resp_body == "Not Found"
+    end
+
     test "querying for an id that doesn't exist 404s on multiple", %{conn: conn} do
       response =
         build_conn()
@@ -133,7 +143,7 @@ defmodule TellerSandboxWeb.AccountControllerTest do
 
       assert response == %{
                "account_number" => 1_234_567_891,
-               "balances" => %{"available" => 10, "ledger" => 10},
+               "balances" => %{"available" => "10000", "ledger" => "10000"},
                "currency_code" => "USD",
                "enrollment_id" => "test_MTIzNDU2Nzg5MQ==",
                "id" => "test_acc_GEZDGNBVGY3TQOJR",
@@ -162,7 +172,7 @@ defmodule TellerSandboxWeb.AccountControllerTest do
 
       assert response == %{
                "account_number" => 1_234_567_891,
-               "balances" => %{"available" => 10, "ledger" => 10},
+               "balances" => %{"available" => "10000", "ledger" => "10000"},
                "currency_code" => "USD",
                "enrollment_id" => "test_MTIzNDU2Nzg5MQ==",
                "id" => "test_acc_GEZDGNBVGY3TQOJR",

@@ -39,7 +39,8 @@ defmodule TellerSandbox.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:ecto, ">0.0.0"},
-      {:murmur, "~> 1.0"}
+      {:murmur, "~> 1.0"},
+      {:mox, ">0.0.0", only: :test}
     ]
   end
 
