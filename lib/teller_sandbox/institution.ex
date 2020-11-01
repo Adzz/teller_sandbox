@@ -1,7 +1,6 @@
 defmodule Teller.Institution do
-  use Ecto.Schema
+  use Teller.TellerSchema
 
-  @primary_key false
   embedded_schema do
     field(:id, :string)
     field(:name, :string)

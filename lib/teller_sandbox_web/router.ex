@@ -19,7 +19,8 @@ defmodule TellerSandboxWeb.Router do
     pipe_through :browser
 
     get("/", HomeController, :index)
-    get("/accounts", AccountController, :get)
+    get("/accounts", AccountController, :all)
+    get("/accounts/:account_id", AccountController, :get)
     # live "/", PageLive, :index
   end
 

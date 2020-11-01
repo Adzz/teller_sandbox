@@ -1,7 +1,6 @@
 defmodule Teller.Balances do
-  use Ecto.Schema
+  use Teller.TellerSchema
 
-  @primary_key false
   embedded_schema do
     field(:available, :decimal)
     field(:ledger, :decimal)

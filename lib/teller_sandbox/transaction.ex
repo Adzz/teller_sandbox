@@ -1,7 +1,6 @@
 defmodule Teller.Transaction do
-  use Ecto.Schema
+  use Teller.TellerSchema
 
-  @primary_key false
   embedded_schema do
     field(:account_id, :string)
     field(:amount, :decimal)

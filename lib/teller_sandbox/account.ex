@@ -1,7 +1,7 @@
 defmodule Teller.Account do
-  use Ecto.Schema
+  use Teller.TellerSchema
+  @link_prepend "http://localhost/accounts/"
 
-  @primary_key false
   embedded_schema do
     field(:account_number, :integer)
     embeds_one(:balances, Teller.Balances)
@@ -13,8 +13,6 @@ defmodule Teller.Account do
     field(:name, :string)
     embeds_one(:routing_numbers, Teller.RoutingNumbers)
   end
-
-  @link_prepend "http://localhost/accounts/"
 
   @doc """
   Generates one or more accounts based on the given token. The data generated is hashed off of the
@@ -31,11 +29,13 @@ defmodule Teller.Account do
     # I have opted for the latter.
 
     # To do that we need to reduce over the data, so we can remove account names and institutions
-    # as they are used. We also need to change the token slightly for each so we get different results.
+    # as they are used. We also need to change the token slightly for each so we get different
+    # results.
 
-    # The max number of accounts is the number of possible accounts.
-    number_of_accounts = Integer.mod(Murmur.hash_x86_32(token), length(the_account_names()) - 1)
-    initial_accumulator = {token, the_account_names(), Teller.Institution.institutions(), []}
+    # The max number of accounts is the number of possible institutions because we can't repeat them.
+    institutions = Teller.Institution.institutions()
+    number_of_accounts = Integer.mod(Murmur.hash_x86_32(token), length(institutions))
+    initial_accumulator = {token, the_account_names(), institutions, []}
 
     {_, _, _, accounts} =
       0..number_of_accounts

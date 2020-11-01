@@ -1,7 +1,6 @@
 defmodule Teller.TransactionLink do
-  use Ecto.Schema
+  use Teller.TellerSchema
 
-  @primary_key false
   embedded_schema do
     field(:account, :string)
     field(:self, :string)
