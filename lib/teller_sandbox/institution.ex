@@ -8,12 +8,8 @@ defmodule Teller.Institution do
   end
 
   def from_token_hash(token_hash) do
-    institution = Enum.at(institutions, Integer.mod(token_hash, length(institutions)))
-
-    %Teller.Institution{
-      id: institution.id,
-      name: institution.name
-    }
+    institution = Enum.at(institutions(), Integer.mod(token_hash, length(institutions())))
+    %Teller.Institution{id: institution.id, name: institution.name}
   end
 
   def institutions() do

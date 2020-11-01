@@ -31,11 +31,3 @@ Each token will always return the same response per day. If a day passes, the ol
 ```sh
 mix test
 ```
-
-
-### Notes to reviewers
-
-I wasn't sure how serious you were about there being no state. Like is that no gen_servers? Go the data generation we've taken it very literally and we generate the data based on a hash of the token. Meaning the same token is guaranteed to return the same data. However, it is not guaranteed that each token returns unique data.
-
-
-We can still seed data then use a hashing function to select it. That means we can pre-compute possible values and we can
