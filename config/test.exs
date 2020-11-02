@@ -6,7 +6,7 @@ config :teller_sandbox, TellerSandboxWeb.Endpoint,
   http: [port: 4002],
   server: false
 
-config(:teller_sandbox, date_module: DateMock)
+config(:teller_sandbox, date_module: DateMock, dashboard_module: DashboardMock)
 
 # Print only warnings and errors during test
 config :logger, level: :warn

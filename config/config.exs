@@ -15,7 +15,7 @@ config :teller_sandbox, TellerSandboxWeb.Endpoint,
   pubsub_server: TellerSandbox.PubSub,
   live_view: [signing_salt: "vhh7O1PD"]
 
-config(:teller_sandbox, date_module: Date)
+config(:teller_sandbox, date_module: Date, dashboard_module: Teller.Dashboard)
 
 # Configures Elixir's Logger
 config :logger, :console,

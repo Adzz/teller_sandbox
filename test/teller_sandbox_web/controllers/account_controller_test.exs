@@ -1,8 +1,12 @@
 defmodule TellerSandboxWeb.AccountControllerTest do
   use TellerSandboxWeb.ConnCase, async: true
+  import Mox
+  setup :verify_on_exit!
 
   describe "all" do
     test "We can query for all of the accounts when we are signed in", %{conn: conn} do
+      expect(DashboardMock, :increment_endpoint_count, fn :accounts -> %{} end)
+
       response =
         build_conn()
         |> put_req_header("authorization", "Basic #{Base.url_encode64("test_1234567891:")}")
@@ -27,6 +31,8 @@ defmodule TellerSandboxWeb.AccountControllerTest do
     end
 
     test "Querying for multiple accounts", %{conn: conn} do
+      expect(DashboardMock, :increment_endpoint_count, fn :accounts -> %{} end)
+
       response =
         build_conn()
         |> put_req_header(
@@ -103,6 +109,8 @@ defmodule TellerSandboxWeb.AccountControllerTest do
 
   describe "get" do
     test "querying for an id that doesn't exist 404s", %{conn: conn} do
+      expect(DashboardMock, :increment_endpoint_count, fn :account -> %{} end)
+
       response =
         build_conn()
         |> put_req_header("authorization", "Basic #{Base.url_encode64("test_2:")}")
@@ -113,6 +121,8 @@ defmodule TellerSandboxWeb.AccountControllerTest do
     end
 
     test "we 404 on incorrect params", %{conn: conn} do
+      expect(DashboardMock, :increment_endpoint_count, fn :account -> %{} end)
+
       response =
         build_conn()
         |> put_req_header("authorization", "Basic #{Base.url_encode64("test_multiple_2:")}")
@@ -123,6 +133,8 @@ defmodule TellerSandboxWeb.AccountControllerTest do
     end
 
     test "querying for an id that doesn't exist 404s on multiple", %{conn: conn} do
+      expect(DashboardMock, :increment_endpoint_count, fn :account -> %{} end)
+
       response =
         build_conn()
         |> put_req_header("authorization", "Basic #{Base.url_encode64("test_multiple_2:")}")
@@ -133,6 +145,8 @@ defmodule TellerSandboxWeb.AccountControllerTest do
     end
 
     test "querying for an id does exist returns that account", %{conn: conn} do
+      expect(DashboardMock, :increment_endpoint_count, fn :account -> %{} end)
+
       response =
         build_conn()
         |> put_req_header("authorization", "Basic #{Base.url_encode64("test_1234567891:")}")
@@ -159,6 +173,8 @@ defmodule TellerSandboxWeb.AccountControllerTest do
     end
 
     test "if there are multiple accounts we can find them", %{conn: conn} do
+      expect(DashboardMock, :increment_endpoint_count, fn :account -> %{} end)
+
       response =
         build_conn()
         |> put_req_header(

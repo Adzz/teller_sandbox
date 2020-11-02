@@ -12,7 +12,8 @@ defmodule TellerSandbox.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: TellerSandbox.PubSub},
       # Start the Endpoint (http/https)
-      TellerSandboxWeb.Endpoint
+      TellerSandboxWeb.Endpoint,
+      {Teller.Dashboard, %{}}
       # Start a worker by calling: TellerSandbox.Worker.start_link(arg)
       # {TellerSandbox.Worker, arg}
     ]

@@ -5,6 +5,7 @@ defmodule TellerSandboxWeb.TransactionControllerTest do
   describe "all" do
     test "incorrect params is a 404", %{conn: conn} do
       expect(DateMock, :utc_today, fn -> ~D[2020-11-01] end)
+      expect(DashboardMock, :increment_endpoint_count, fn :transactions -> %{} end)
 
       response =
         build_conn()
@@ -17,6 +18,7 @@ defmodule TellerSandboxWeb.TransactionControllerTest do
 
     test "incorrect id is not found", %{conn: conn} do
       expect(DateMock, :utc_today, fn -> ~D[2020-11-01] end)
+      expect(DashboardMock, :increment_endpoint_count, fn :transactions -> %{} end)
 
       response =
         build_conn()
@@ -29,6 +31,7 @@ defmodule TellerSandboxWeb.TransactionControllerTest do
 
     test "We can query for all of the transactions for a given account", %{conn: conn} do
       expect(DateMock, :utc_today, fn -> ~D[2020-11-01] end)
+      expect(DashboardMock, :increment_endpoint_count, fn :transactions -> %{} end)
 
       response =
         build_conn()
@@ -64,6 +67,7 @@ defmodule TellerSandboxWeb.TransactionControllerTest do
   describe "get" do
     test "incorrect params is a 404", %{conn: conn} do
       expect(DateMock, :utc_today, fn -> ~D[2020-11-01] end)
+      expect(DashboardMock, :increment_endpoint_count, fn :transaction -> %{} end)
 
       response =
         build_conn()
@@ -76,6 +80,7 @@ defmodule TellerSandboxWeb.TransactionControllerTest do
 
     test "incorrect id is not found", %{conn: conn} do
       expect(DateMock, :utc_today, fn -> ~D[2020-11-01] end)
+      expect(DashboardMock, :increment_endpoint_count, fn :transaction -> %{} end)
 
       response =
         build_conn()
@@ -99,6 +104,7 @@ defmodule TellerSandboxWeb.TransactionControllerTest do
 
     test "We get the transaction returned", %{conn: conn} do
       expect(DateMock, :utc_today, fn -> ~D[2020-11-01] end)
+      expect(DashboardMock, :increment_endpoint_count, fn :transaction -> %{} end)
 
       response =
         build_conn()

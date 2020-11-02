@@ -23,7 +23,7 @@ curl --user test_3672394111: http://localhost:4000
 
 To make the developer's life easier you can specify `test_multiple_3672394111` to receive a response with multiple accounts.
 
-Each token will always return the same response per day. If a day passes, the old responses will still be returned, but a new one for the new day will be added.
+Each token will always return the same response.
 
 
 ### Tests
