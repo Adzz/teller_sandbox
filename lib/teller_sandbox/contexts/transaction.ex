@@ -1,4 +1,5 @@
 defmodule Teller.Contexts.Transaction do
+  alias Teller.Contexts.Account
   @min_transaction_cost_in_pennies 133
 
   @doc """
@@ -50,6 +51,16 @@ defmodule Teller.Contexts.Transaction do
       end)
 
     transactions
+  end
+
+  @doc """
+  Returns the transaction with the given id or nil if it can't be found.
+  """
+  def get_by_id(token, account_id, transaction_id) do
+    with account = %{} <- Account.get_by_id(token, account_id),
+         transactions = [_ | _] <- generate_from_account(account) do
+      Enum.find(transactions, &(&1.id == transaction_id))
+    end
   end
 
   defp amount(balance, 1), do: balance

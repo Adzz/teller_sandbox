@@ -22,6 +22,7 @@ defmodule TellerSandboxWeb.Router do
     get("/accounts", AccountController, :all)
     get("/accounts/:account_id", AccountController, :get)
     get("/accounts/:account_id/transactions", TransactionController, :all)
+    get("/accounts/:account_id/transactions/:transaction_id", TransactionController, :get)
   end
 
   # Other scopes may use custom stacks.

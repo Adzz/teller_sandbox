@@ -17,4 +17,18 @@ defmodule TellerSandboxWeb.TransactionController do
   end
 
   def all(conn, _), do: Plug.Conn.send_resp(conn, 404, "Not Found")
+
+  @doc "Gets the specific account if it exists."
+  def get(conn, %{"account_id" => account_id, "transaction_id" => transaction_id}) do
+    case Transaction.get_by_id(conn.assigns.token, account_id, transaction_id) do
+      nil ->
+        put_resp_content_type(conn, "application/json")
+        |> Plug.Conn.send_resp(404, "Not Found")
+
+      transaction = %{} ->
+        conn |> put_resp_content_type("application/json") |> json(transaction)
+    end
+  end
+
+  def get(conn, _), do: Plug.Conn.send_resp(conn, 404, "Not Found")
 end

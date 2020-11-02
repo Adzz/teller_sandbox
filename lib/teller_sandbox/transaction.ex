@@ -8,7 +8,7 @@ defmodule Teller.Transaction do
     field(:description, :string)
     field(:id, :string)
     embeds_one(:links, Teller.TransactionLink)
-    # I'm assuming this is the balance BEFORE the transaction is applied.
+    # this is the balance BEFORE the transaction amount is applied.
     field(:running_balance, :decimal)
     field(:type, :string)
   end
